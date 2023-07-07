@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using WebFormsLeaflet.Model;
 
 namespace WebFormsLeaflet.Controllers
 {
     public class MapsController : ApiController
     {
-        public IHttpActionResult Get()
+        
+        private Entities db = new Entities();
+        
+        public async Task<IHttpActionResult> Get()
         {
-            return Ok(new { message = "Dane z serwera" });
+            var miasta = await db.Miasta.ToListAsync();
+            
+            return Ok(miasta);
         }
     }
 }

@@ -11,23 +11,24 @@
 <script src="Content/leaflet/leaflet.js"></script>
 <script>
     var map = L.map('map').setView([52.22, 21.01], 13);
+
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    var greenIcon = L.icon({
-        iconUrl: 'Content/leaflet/images/tank1.png',
-        //shadowUrl: 'leaf-shadow.png',
+    //var greenIcon = L.icon({
+    //    iconUrl: 'Content/leaflet/images/tank1.png',
+    //    //shadowUrl: 'leaf-shadow.png',
 
-        iconSize: [95, 95], // size of the icon
-        //shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
+    //    iconSize: [95, 95], // size of the icon
+    //    //shadowSize: [50, 64], // size of the shadow
+    //    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+    //    shadowAnchor: [4, 62],  // the same for the shadow
+    //    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    //});
 
-    L.marker([52.22, 21.01], { icon: greenIcon }).addTo(map);
+    //L.marker([52.22, 21.01], { icon: greenIcon }).addTo(map);
 </script>
 <script>
 
@@ -37,7 +38,25 @@
         $.getJSON("api/maps", function (data) {
             console.log(data);
 
-            $("#text").html(data.message);
+            //$("#text").html(data[0].Miasto);
+
+            for (var i = 0; i < data.length; i++) {
+
+                var lat = data[i].Latitude;
+                var lon = data[i].Longitude;
+                var miasto = data[i].Miasto;
+
+                var greenIcon = L.icon({
+                    iconUrl: 'Content/leaflet/images/tank1.png',
+                    iconSize: [40, 40], // size of the icon
+                    //shadowSize: [50, 64], // size of the shadow
+                    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+
+                L.marker([lat, lon], { icon: greenIcon }).addTo(map);
+            }
         });
     });
 
